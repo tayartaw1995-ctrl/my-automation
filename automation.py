@@ -12,33 +12,33 @@ from googleapiclient.http import MediaFileUpload
 def add_date_to_thumbnail(input_path, output_path):
     print("[INFO] ပုံပေါ်တွင် ရက်စွဲ ထည့်သွင်းနေပါသည်...")
     try:
-        # ဒီနေ့ ရက်စွဲကို ယူသည် (ဥပမာ: 26.05.2026)
         today_date = datetime.now().strftime("%d.%m.%Y")
         
         img = Image.open(input_path)
         draw = ImageDraw.Draw(img)
         
-        # ဖောင့်နှင့် အရွယ်အစား သတ်မှတ်ခြင်း (GitHub စက်ထဲရှိ ဖောင့်ကိုသုံးသည်)
+        # ဖောင့်အရွယ်အစား ၉၀
         try:
             font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 90)
         except IOError:
             font = ImageFont.load_default()
             
-        # စာသား နေရာချထားရန် တွက်ချက်ခြင်း
         bbox = draw.textbbox((0, 0), today_date, font=font)
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
-        # ညာဘက်အောက်ထောင့်နားတွင် နေရာချခြင်း
+        # tayar.py မှ အတိုင်း ညာသို့ ၂၀၀၊ အပေါ်သို့ ၅၀ ပြင်ဆင်ထားသည်
         x = ((img.width - text_width) / 2) + 200
-        y = img.height - text_height - 100
+        y = img.height - text_height - 50
         
-        # စာသား ပိုထင်ရှားစေရန် အနက်ရောင် အနားသတ် (Outline) ဆွဲခြင်း
-        for i in range(-4, 5):
-            for j in range(-4, 5):
-                draw.text((x+i, y+j), today_date, font=font, fill="black")
+        # Outline width 3 ဖြင့် အနက်ရောင်အရင်ဆွဲသည်
+        outline_color = "black"
+        outline_width = 3
+        for i in range(-outline_width, outline_width+1):
+            for j in range(-outline_width, outline_width+1):
+                draw.text((x+i, y+j), today_date, font=font, fill=outline_color)
                 
-        # အဖြူရောင် စာသားအစစ် ရေးခြင်း
+        # အဖြူရောင်စာသားအစစ် ထပ်ရေးသည်
         draw.text((x, y), today_date, font=font, fill="white")
         
         img.convert("RGB").save(output_path)
