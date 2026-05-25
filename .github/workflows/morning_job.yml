@@ -2,18 +2,18 @@ name: Morning Video Upload and Live Stream
 
 on:
   schedule:
-    # မြန်မာစံတော်ချိန် မနက် ၃:၀၀ နာရီတွင် အလုပ်စလုပ်ရန် (UTC 20:30)
+    # မြန်မာစံတော်ချိန် မနက် ၃:၀၀ နာရီတွင် အလိုအလျောက် အလုပ်စလုပ်ရန် (UTC 20:30)
     - cron: '30 20 * * *' 
-  workflow_dispatch: 
+  workflow_dispatch: # လက်ဖြင့် အစမ်းနှိပ် Run ချင်လျှင်လည်း ရအောင် ထည့်ထားခြင်း
 
 jobs:
   run-automation:
     runs-on: ubuntu-latest
     steps:
-    - name: Code များကို ဆွဲသွင်းခြင်း
+    - name: Repo ထဲမှ ကုဒ်များအား စက်ထဲသို့ ထည့်ခြင်း
       uses: actions/checkout@v3
 
-    - name: Python နှင့် FFmpeg အား ပြင်ဆင်ခြင်း
+    - name: Python နှင့် FFmpeg အား စက်ထဲတွင် အသင့်ပြင်ဆင်ခြင်း
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
@@ -25,20 +25,24 @@ jobs:
     - name: Google Drive မှ မနက်ပိုင်းဖိုင်များ ဒေါင်းလုဒ်ဆွဲခြင်း
       run: |
         gdown --id ${{ secrets.M_VIDEO_LINK }} -O m_video.mp4
-        gdown --id ${{ secrets.M_AUDIO_LINK }} -O m_audio.mp3
         gdown --id ${{ secrets.M_THUMB_VIDEO }} -O m_video_thumb_raw.jpg
-        gdown --id ${{ secrets.M_THUMB_LIVE }} -O m_live_thumb_raw.jpg
+        # ⚠️ လောလောဆယ် Secret ထဲတွင် မထည့်ရသေးသဖြင့် အောက်ပါ Live ဖိုင်များကို ခေတ္တပိတ်ထားသည်
+        # gdown --id ${{ secrets.M_AUDIO_LINK }} -O m_audio.mp3
+        # gdown --id ${{ secrets.M_THUMB_LIVE }} -O m_live_thumb_raw.jpg
 
-    - name: Python ဖြင့် ဗီဒီယိုအား Schedule တင်ခြင်း
+    - name: Python Script ကို Run ၍ ဗီဒီယိုအား Schedule တင်ခြင်း
       env:
         YOUTUBE_CLIENT_SECRETS_DATA: ${{ secrets.YOUTUBE_CLIENT_SECRETS }}
         YOUTUBE_TOKEN_DATA: ${{ secrets.YOUTUBE_TOKEN_JSON }}
       run: python automation.py morning
 
-    - name: Live Thumbnail ဗီဒီယိုပေါ်သို့ ရက်စွဲထည့်ခြင်း
-      run: |
-        ffmpeg -i m_live_thumb_raw.jpg -vf "drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:text='$(date +%d.%m.%Y)':x=(w-tw)/2+200:y=h-th-100:fontcolor=white:fontsize=90:box=1:boxcolor=black@0.6" -y m_live_video_ready.mp4
+    # =========================================================================
+    # ⚠️ Live Stream Key မရသေးမီ ကုဒ် Error မတက်စေရန် အောက်ပါလုပ်ငန်းစဉ်များကို ပိတ်ထားပါသည်
+    # =========================================================================
+    # - name: Live Thumbnail ဗီဒီယိုပေါ်သို့ ရက်စွဲထည့်ခြင်း
+    #   run: |
+    #     ffmpeg -i m_live_thumb_raw.jpg -vf "drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:text='$(date +%d.%m.%Y)':x=(w-tw)/2+200:y=h-th-50:fontcolor=white:fontsize=90:box=1:boxcolor=black@0.6" -y m_live_video_ready.mp4
 
-    - name: ၅ နာရီ ၅၀ မိနစ်စာ (စက္ကန့် ၂၁၀၀၀) Live စတင်လွှင့်ခြင်း
-      run: |
-        ffmpeg -stream_loop -1 -i m_live_video_ready.mp4 -i m_audio.mp3 -c:v libx264 -pix_fmt yuv420p -preset veryfast -b:v 2500k -c:a aac -b:a 128k -f flv -t 21000 "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
+    # - name: YouTube ပေါ်သို့ ၅ နာရီ ၅၀ မိနစ်စာ Live စတင်လွှင့်ခြင်း
+    #   run: |
+    #     ffmpeg -stream_loop -1 -i m_live_video_ready.mp4 -i m_audio.mp3 -c:v libx264 -pix_fmt yuv420p -preset veryfast -b:v 2500k -c:a aac -b:a 128k -f flv -t 21000 "rtmp://a.rtmp.youtube.com/live2/${{ secrets.YOUTUBE_STREAM_KEY }}"
