@@ -1,9 +1,11 @@
 name: Evening Video Upload and Live Stream
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
+# (အောက်က ကုဒ်တွေအားလုံးကို ဘာမှထပ်ပြင်စရာမလိုပါ၊ အတိုင်းထားလိုက်ပါ)
   run-automation:
     runs-on: ubuntu-latest
     steps:
