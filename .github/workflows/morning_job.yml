@@ -24,8 +24,8 @@ jobs:
 
     - name: Google Drive မှ မနက်ပိုင်းဖိုင်များ ဒေါင်းလုဒ်ဆွဲခြင်း
       run: |
-        gdown --id ${{ secrets.M_VIDEO_LINK }} -O m_video.mp4
-        gdown --id ${{ secrets.M_THUMB_VIDEO }} -O m_video_thumb_raw.jpg
+        gdown ${{ secrets.M_VIDEO_LINK }} -O m_video.mp4
+        gdown ${{ secrets.M_THUMB_VIDEO }} -O m_video_thumb_raw.jpg
         # ⚠️ လောလောဆယ် Secret ထဲတွင် မထည့်ရသေးသဖြင့် အောက်ပါ Live ဖိုင်များကို ခေတ္တပိတ်ထားသည်
         # gdown --id ${{ secrets.M_AUDIO_LINK }} -O m_audio.mp3
         # gdown --id ${{ secrets.M_THUMB_LIVE }} -O m_live_thumb_raw.jpg
