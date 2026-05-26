@@ -97,7 +97,7 @@ if __name__ == "__main__":
     job_type = sys.argv[1] if len(sys.argv) > 1 else "morning"
     
     # အစ်ကို ပေးထားသော ပုံသေ ခေါင်းစဉ် (Title)
-    base_title = "တော်များ | တရားတော်များ 2026 | (ဘေးရှင်းအန္တရာယ်ကင်းကံပွင့်လာဘ်ပွင့်)| Dhamma Garden (ဓမ္မပန်းခင်း)"
+    base_title = "တရားတော်များ 2026 | (ဘေးရှင်းအန္တရာယ်ကင်းကံပွင့်လာဘ်ပွင့်)| Dhamma Garden (ဓမ္မပန်းခင်း)"
 
     # အစ်ကို ပေးထားသော Description အရှည်ကြီး (Multiline String သုံးထားသည်)
     video_description = """#dhammachannel #buddhatayarchannel #တရား
