@@ -1,11 +1,7 @@
-name: Evening Video Upload and Live Stream
+name: Evening Video Upload and Live Stream # ညနေပိုင်းဆိုရင် Evening ပေါ့
 
 on:
-  schedule:
-    # မြန်မာစံတော်ချိန် ညနေ ၃:၀၀ နာရီတွင် အလိုအလျောက် အလုပ်စလုပ်ရန် (UTC 08:30)
-    - cron: '30 8 * * *'
-  workflow_dispatch:
-
+  workflow_dispatch: # လက်ဖြင့် သို့မဟုတ် API (Termux) မှ လှမ်းခေါ်မှသာ အလုပ်လုပ်ရန်
 jobs:
   run-automation:
     runs-on: ubuntu-latest
