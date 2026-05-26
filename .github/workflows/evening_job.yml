@@ -1,7 +1,8 @@
-name: Evening Video Upload and Live Stream # ညနေပိုင်းဆိုရင် Evening ပေါ့
+name: Evening Video Upload and Live Stream
 
 on:
-  workflow_dispatch: # လက်ဖြင့် သို့မဟုတ် API (Termux) မှ လှမ်းခေါ်မှသာ အလုပ်လုပ်ရန်
+  workflow_dispatch:
+
 jobs:
   run-automation:
     runs-on: ubuntu-latest
@@ -22,7 +23,6 @@ jobs:
       run: |
         gdown ${{ secrets.E_VIDEO_LINK }} -O e_video.mp4
         gdown ${{ secrets.E_THUMB_VIDEO }} -O e_video_thumb_raw.jpg
-        # ⚠️ လောလောဆယ် Secret ထဲတွင် မထည့်ရသေးသဖြင့် အောက်ပါ Live ဖိုင်များကို ခေတ္တပိတ်ထားသည်
         # gdown ${{ secrets.E_AUDIO_LINK }} -O e_audio.mp3
         # gdown ${{ secrets.E_THUMB_LIVE }} -O e_live_thumb_raw.jpg
 
@@ -32,9 +32,6 @@ jobs:
         YOUTUBE_TOKEN_DATA: ${{ secrets.YOUTUBE_TOKEN_JSON }}
       run: python automation.py evening
 
-    # =========================================================================
-    # ⚠️ Live Stream Key မရသေးမီ ကုဒ် Error မတက်စေရန် အောက်ပါလုပ်ငန်းစဉ်များကို ပိတ်ထားပါသည်
-    # =========================================================================
     # - name: ညနေပိုင်း Live Thumbnail ဗီဒီယိုပေါ်သို့ ရက်စွဲထည့်ခြင်း
     #   run: |
     #     ffmpeg -i e_live_thumb_raw.jpg -vf "drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:text='$(date +%d.%m.%Y)':x=(w-tw)/2+200:y=h-th-50:fontcolor=white:fontsize=90:box=1:boxcolor=black@0.6" -y e_live_video_ready.mp4
