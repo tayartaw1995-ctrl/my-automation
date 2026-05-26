@@ -24,11 +24,11 @@ jobs:
 
     - name: Google Drive မှ ညနေပိုင်းဖိုင်များ ဒေါင်းလုဒ်ဆွဲခြင်း
       run: |
-        gdown --id ${{ secrets.E_VIDEO_LINK }} -O e_video.mp4
-        gdown --id ${{ secrets.E_THUMB_VIDEO }} -O e_video_thumb_raw.jpg
+        gdown ${{ secrets.E_VIDEO_LINK }} -O e_video.mp4
+        gdown ${{ secrets.E_THUMB_VIDEO }} -O e_video_thumb_raw.jpg
         # ⚠️ လောလောဆယ် Secret ထဲတွင် မထည့်ရသေးသဖြင့် အောက်ပါ Live ဖိုင်များကို ခေတ္တပိတ်ထားသည်
-        # gdown --id ${{ secrets.E_AUDIO_LINK }} -O e_audio.mp3
-        # gdown --id ${{ secrets.E_THUMB_LIVE }} -O e_live_thumb_raw.jpg
+        # gdown ${{ secrets.E_AUDIO_LINK }} -O e_audio.mp3
+        # gdown ${{ secrets.E_THUMB_LIVE }} -O e_live_thumb_raw.jpg
 
     - name: Python ဖြင့် ညနေပိုင်း ဗီဒီယိုအား Schedule တင်ခြင်း
       env:
