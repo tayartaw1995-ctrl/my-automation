@@ -152,7 +152,7 @@ Welcome to our Dhamma Talk and Buddhist Chanting collection, dedicated to the My
         add_date_to_thumbnail("e_video_thumb_raw.jpg", "e_video_thumb.jpg")
         
         # Schedule ပြသမည့်အချိန် (ညနေ ၆:၃၀)
-        target_time = datetime.now().strftime("%Y-%m-%dT18:30:00+06:30")
+        target_time = datetime.now().strftime("%Y-%m-%dT20:30:00+06:30")
         
         # ဤနေရာတွင် final_title နှင့် video_description ကို ထည့်သွင်းပေးလိုက်ပါသည်
         upload_video_to_youtube("e_video.mp4", "e_video_thumb.jpg", final_title, video_description, target_time)
